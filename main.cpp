@@ -1,7 +1,6 @@
-// This program is a binary search tree, allows user to enter numbers through console or file and makes it into a binary tree. User can add to it, search for certain numbers, delete certain numbers, and also see the tree (print). 
-// Ethan Wang
-// 3/9/20
-
+// The binary tree allows users to contribute and search up numbers. 
+// Michael Wang
+// 5/17/21
 #include "Node.h"
 #include <iostream>
 #include <cmath>
@@ -10,7 +9,6 @@
 #include <cstdlib>
 
 using namespace std;
-//Prototypes
 void add(Node* head, int wadd);
 void print(Node* head, int format);
 Node* deleteN(Node* head, int wdel);
@@ -52,7 +50,6 @@ int main() {
     for (int i = 0; i < count; i++) {
       add(head, array[i]); 
     }
-    //Further Command Line
     while (running == true) {
       cout << "\nYou can do stuff now, you can ADD, DELETE, PRINT, SEARCH, EXIT \n";
       char* getInput = new char[50];
@@ -104,7 +101,7 @@ int main() {
 
   return 0; 
 }
-//Add to Tree
+//Add an integer value to the tree
 void add(Node* head, int wadd) {
   if (head -> getData() == NULL) {
     head -> setData(wadd);
@@ -148,31 +145,8 @@ void print(Node* head, int format) {
     cout << head -> getData();
     print(head -> getLeft(), format); 
 }
-//Delete Node of Tree 
-Node* deleteN(Node* head, int wdel) {
-  if (head -> getData() > wdel) {
-    head -> setLeft(deleteN(head -> getLeft(), wdel)); 
-  }
-  else if (head -> getData() < wdel) {
-    head -> setRight(deleteN(head -> getRight(), wdel));
-  }
-  else {
-    if (head -> getLeft() == NULL) {
-      Node* temp = head -> getRight();
-      free(head);
-      return temp; 
-    }
-    else if (head -> getRight() == NULL) {
-      Node* temp = head -> getLeft();
-      free(head);
-      return temp; 
-    }
-    Node* temp = small(head -> getRight());
-    head -> setData(temp -> getData());
-    head -> setRight(deleteN(head -> getRight(), temp -> getData())); 
-  }
-}
-//Search for specific node
+
+//Search for a node
 void search(Node* head, bool rsearch, int wsearch) { 
   Node* filler = NULL;
   int tracker = 0;
@@ -196,7 +170,33 @@ void search(Node* head, bool rsearch, int wsearch) {
   }
     
 }
-//Finds Smallest
+
+//Delete a node
+Node* deleteN(Node* head, int wdel) {
+  if (head -> getData() > wdel) {
+    head -> setLeft(deleteN(head -> getLeft(), wdel)); 
+  }
+  else if (head -> getData() < wdel) {
+    head -> setRight(deleteN(head -> getRight(), wdel));
+  }
+  else {
+    if (head -> getLeft() == NULL) {
+      Node* temp = head -> getRight();
+      free(head);
+      return temp; 
+    }
+    else if (head -> getRight() == NULL) {
+      Node* temp = head -> getLeft();
+      free(head);
+      return temp; 
+    }
+    Node* temp = small(head -> getRight());
+    head -> setData(temp -> getData());
+    head -> setRight(deleteN(head -> getRight(), temp -> getData())); 
+  }
+}
+
+//Find smallest data point
 Node* small(Node* head) {
   Node* current = head;
   while (current -> getLeft() != NULL) {
